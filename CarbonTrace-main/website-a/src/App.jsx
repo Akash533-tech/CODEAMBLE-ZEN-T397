@@ -51,6 +51,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Landing />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/gov/login" element={<Login />} />
 
       {/* Government routes — protected */}
       <Route
@@ -103,6 +104,8 @@ function App() {
         <Route path="payments"  element={<NgoPayments />} />
       </Route>
 
+      {/* Catch-all route to login */}
+      <Route path="*" element={<Navigate to="/login" replace />} />
     </Routes>
   );
 }
