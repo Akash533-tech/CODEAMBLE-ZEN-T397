@@ -1,0 +1,58 @@
+services:
+  # ─── PostgreSQL Database ─────────────────────────────────────────────────────
+  postgres:
+    image: postgres:15-alpine
+    container_name: carbontrace-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${DB_USER:-carbontrace}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-carbontrace_dev}
+      POSTGRES_DB: ${DB_NAME:-carbontrace_db}
+    ports:
+      - '5432:5432'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U ${DB_USER:-carbontrace} -d ${DB_NAME:-carbontrace_db}']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # ─── Backend API Server ──────────────────────────────────────────────────────
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: carbontrace-api
+    restart: unless-stopped
+    ports:
+      - '5001:5001'
+    env_file:
+      - .env
+    environment:
+      NODE_ENV: production
+      DB_HOST: postgres
+    volumes:
+      - uploads:/app/uploads
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  # ─── Website A — Government Portal (production nginx) ────────────────────────
+  frontend-a:
+    build:
+      context: ./website-a
+      dockerfile: Dockerfile
+      target: production
+    container_name: carbontrace-gov
+    restart: unless-stopped
+    ports:
+      - '3000:80'
+    depends_on:
+      - backend
+
+volumes:
+  pgdata:
+    driver: local
+  uploads:
+    driver: local

@@ -1,0 +1,17 @@
+{
+  "name": "carbontrace-contracts",
+  "version": "1.0.0",
+  "description": "CarbonTrace Smart Contracts — Hardhat + Solidity",
+  "scripts": {
+    "compile": "npx hardhat compile",
+    "test": "npx hardhat test",
+    "deploy:local": "npx hardhat run scripts/deploy.js --network localhost",
+    "deploy:sepolia": "npx hardhat run scripts/deploy.js --network sepolia",
+    "node": "npx hardhat node"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "dotenv": "^16.4.5",
+    "hardhat": "^2.22.5"
+  }
+}
