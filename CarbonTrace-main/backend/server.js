@@ -26,14 +26,7 @@ process.on('uncaughtException', (err) => {
 app.set('trust proxy', 1);
 app.use(helmet());
 app.use(cors({
-  origin: [
-    process.env.FRONTEND_A_URL || 'http://localhost:3000',
-    process.env.FRONTEND_B_URL || 'http://localhost:3001',
-    'http://localhost:3000',
-    'http://127.0.0.1:3000',
-    'http://localhost:3001',
-    'http://127.0.0.1:3001',
-  ],
+  origin: true,
   credentials: true,
 }));
 
