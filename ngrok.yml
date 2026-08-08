@@ -1,0 +1,11 @@
+version: "2"
+tunnels:
+  esg-backend:
+    proto: http
+    addr: 4000
+  carbontrace-backend:
+    proto: http
+    addr: 5002
+  jaldrishti-backend:
+    proto: http
+    addr: 6001

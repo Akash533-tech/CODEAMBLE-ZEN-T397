@@ -13,14 +13,14 @@ export default function Landing() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5001'}/api/gov/credits/count`)
+    fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5002'}/api/gov/credits/count`)
       .then((r) => r.json())
       .then((d) => {
         if (d.total_issued) setCreditCount(d.total_issued);
       })
       .catch(() => {});
 
-    fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5001'}/api/gov/lands`)
+    fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5002'}/api/gov/lands`)
       .then((r) => r.json())
       .then((d) => {
         if (Array.isArray(d)) setLands(d.length);
